@@ -1,5 +1,8 @@
 # Panadería - Sistema de Gestión de Ventas
 
+![toribioapp](https://github.com/user-attachments/assets/488a7f0c-ece2-41cf-9d08-d098dabb6bc6)
+
+
 Este proyecto es una aplicación web desarrollada con **React** y **Material UI** en el frontend y **Node.js** en el backend. Su objetivo es gestionar y controlar las ventas diarias de una panadería que opera en dos sucursales. La aplicación permite registrar los pagos de ventas y diferenciar entre distintos tipos de pagos. Además, proporciona funcionalidades avanzadas para administradores, como la gestión de usuarios y la generación de reportes en formato `.xls`.
 
 ## Funcionalidades
