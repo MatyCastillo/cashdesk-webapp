@@ -18,7 +18,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { es } from "date-fns/locale";
 import DownloadIcon from "@mui/icons-material/Download";
-import { fetchPaymentDates, downloadPaymentsByDate } from "../services/index"; // Asegúrate de que esta ruta es correcta
+import { fetchPaymentDates, downloadPaymentsByDate } from "../../services/payments";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&.sticky": {

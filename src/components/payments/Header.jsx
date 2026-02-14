@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import logo from "../assets/img/logo.png";
+import logo from "../../assets/img/logo.png";
 
 const Header = () => {
   const [dateTime, setDateTime] = useState({
@@ -25,49 +25,43 @@ const Header = () => {
         position: "relative",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
-        minWidth: "300px",
-        minHeight: "80px",
-        pl: 2,
-        pr: 2,
+        justifyContent: "flex-start",
+        width: "100%",
+        minWidth: 0,
+        minHeight: { xs: 38, sm: 42, lg: 46 },
+        pl: { xs: 1.25, sm: 1.5 },
+        pr: { xs: 1.25, sm: 1.5 },
         boxSizing: "border-box",
         backgroundColor: "white",
         border: "1px solid #ccc",
         borderRadius: "8px",
         overflow: "hidden",
-        "&:after": {
-          content: '""',
-          position: "absolute",
-          width: 210,
-          height: 210,
-          background: "#d18e61",
-          borderRadius: "50%",
-          top: { xs: -105, sm: -85 },
-          right: { xs: -140, sm: -95 },
-          zIndex: 0,
-        },
-        "&:before": {
-          content: '""',
-          position: "absolute",
-          width: 210,
-          height: 210,
-          background: "#d18e61",
-          borderRadius: "50%",
-          top: { xs: -155, sm: -125 },
-          right: { xs: -70, sm: -15 },
-          opacity: 0.5,
-          zIndex: 0,
-        },
       }}
     >
-      <Box sx={{ zIndex: 1 }}>
-        <img src={logo} alt="Logo" style={{ height: "70px", width: "70px" }} />
+      <Box
+        sx={{
+          position: "absolute",
+          top: { xs: -24, sm: -28, lg: -32 },
+          right: { xs: -30, sm: -36, lg: -40 },
+          width: { xs: 120, sm: 140, lg: 160 },
+          height: { xs: 120, sm: 140, lg: 160 },
+          opacity: 0.22,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      >
+        <img
+          src={logo}
+          alt=""
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
       </Box>
+
       <Box sx={{ zIndex: 1 }}>
-        <Typography variant="body1" sx={{ textAlign: "right" }}>
+        <Typography variant="caption" sx={{ textAlign: "left", display: "block" }}>
           Fecha: <b>{dateTime.date}</b>
         </Typography>
-        <Typography variant="body2" sx={{ textAlign: "right" }}>
+        <Typography variant="caption" sx={{ textAlign: "left", display: "block" }}>
           Hora: <b>{dateTime.time}</b>
         </Typography>
       </Box>

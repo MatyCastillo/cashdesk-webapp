@@ -21,9 +21,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import TransitionAlerts from "./snackbar";
 
-import theme from "../theme/theme";
-import loginImg from "../assets/img/logo.png";
-import useUser from "../hooks/useUser";
+import theme from "../../theme/theme";
+import loginImg from "../../assets/img/logo.png";
+import useUser from "../../hooks/useUser";
 
 export default function SignIn() {
   const { isLoginLoading, hasLoginError, login, isLogged, statusMessage } =

@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-import SignIn from "./components/SignIn";
+import SignIn from "./components/auth/SignIn";
 import { UserContextProvider } from "./context/UserContext";
 import { SnackbarProvider } from 'notistack';
 

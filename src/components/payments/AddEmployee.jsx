@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { addEmployee, checkUsernameUnique } from "../services"; // Importar la función del archivo index.js
+import { addEmployee, checkUsernameUnique } from "../../services/users";
 
 const AddEmployee = () => {
   const [username, setUsername] = useState("");

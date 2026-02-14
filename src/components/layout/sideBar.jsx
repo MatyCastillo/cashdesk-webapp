@@ -11,8 +11,8 @@ import {
   Divider,
   Collapse,
 } from "@mui/material";
-import { renderIcon } from "../utils/dynamicIconLoader";
-import { capitalizeFirstLetter } from "../utils/helper";
+import { renderIcon } from "../../utils/dynamicIconLoader";
+import { capitalizeFirstLetter } from "../../utils/helper";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({

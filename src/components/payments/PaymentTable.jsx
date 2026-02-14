@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Table,
   TableBody,
@@ -12,7 +12,33 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { formatCurrency } from "../utils/numberFormat";
+import { formatCurrency } from "../../utils/numberFormat";
+
+const METHOD_COLORS = {
+  efectivo: "#2196f3",
+  qr: "#4caf50",
+  transferencia: "#ff9800",
+  tarjeta: "#e91e63",
+  diferencia: "#9c27b0",
+};
+
+const getMethodRowStyles = (method) => {
+  const color = METHOD_COLORS[(method || "").toLowerCase()];
+  if (!color) {
+    return {};
+  }
+
+  return {
+    backgroundColor: `${color}14`,
+    "& td": {
+      borderBottomColor: `${color}66`,
+    },
+    "& td:first-of-type": {
+      borderLeft: `4px solid ${color}`,
+      fontWeight: 600,
+    },
+  };
+};
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&.sticky": {
@@ -24,22 +50,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function PaymentTable({ payments, onDelete }) {
   const tableContainerRef = useRef(null);
+  const paymentList = Array.isArray(payments) ? payments : [];
 
-  const [paymentList, setPaymentList] = useState([]);
-
-  useEffect(() => {
-    setPaymentList(payments);
-  }, [payments]);
-
-  const calculateGeneralTotal = () => {
-    return paymentList
-      .reduce((total, payment) => {
-        return payment.method !== "diferencia"
-          ? total + parseFloat(payment.amount)
-          : total;
-      }, 0)
-      .toFixed(2);
-  };
+  const generalTotal = paymentList
+    .reduce((total, payment) => {
+      const amount = Number.parseFloat(payment.amount) || 0;
+      return payment.method !== "diferencia" ? total + amount : total;
+    }, 0)
+    .toFixed(2);
 
   const scrollToBottom = () => {
     if (tableContainerRef.current) {
@@ -50,49 +68,47 @@ export default function PaymentTable({ payments, onDelete }) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [paymentList]);
+  }, [paymentList.length]);
 
   return (
     <Paper
-      style={{
-        height: "90%",
+      sx={{
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        margin: 16,
-        width: "320px",
-        vw: "auto",
-        maxHeight: "400px",
+        width: "100%",
+        minWidth: { xs: 280, sm: 380 },
+        maxHeight: { xs: 360, sm: 460, lg: 540 },
+        borderRadius: 2,
       }}
     >
       <Typography
         variant="body1"
         gutterBottom
-        style={{ marginBottom: 0, paddingLeft: 16 }}
+        sx={{ marginBottom: 0, px: 1.5, pt: 1, fontWeight: 700 }}
       >
         Historial de Pagos
       </Typography>
       <TableContainer
-        style={{ flex: 1, maxHeight: "500px", overflowY: "auto" }}
+        sx={{ flex: 1, maxHeight: "100%", overflowY: "auto" }}
         ref={tableContainerRef}
       >
-        <Table stickyHeader>
+        <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
-              <TableCell style={{ fontWeight: "bold", width: "40%" }}>
+              <TableCell sx={{ fontWeight: "bold", width: "40%" }}>
                 Tipo de Pago
               </TableCell>
-              <TableCell style={{ fontWeight: "bold", width: "40%" }}>
+              <TableCell sx={{ fontWeight: "bold", width: "40%" }}>
                 Monto
               </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold", width: "20%" }}
-              ></TableCell>
+              <TableCell sx={{ fontWeight: "bold", width: "20%" }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paymentList.length > 0 ? (
               paymentList.map((payment, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} sx={getMethodRowStyles(payment.method)}>
                   <TableCell>{payment.method.toUpperCase()}</TableCell>
                   <TableCell align="right">
                     {formatCurrency(payment.amount)}
@@ -115,11 +131,11 @@ export default function PaymentTable({ payments, onDelete }) {
               </TableRow>
             )}
             <StyledTableRow className="sticky">
-              <TableCell style={{ fontWeight: "bold" }}>
+              <TableCell sx={{ fontWeight: "bold" }}>
                 Total General
               </TableCell>
-              <TableCell align="right" style={{ fontWeight: "bold" }}>
-                {formatCurrency(calculateGeneralTotal())}
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {formatCurrency(generalTotal)}
               </TableCell>
               <TableCell></TableCell>
             </StyledTableRow>

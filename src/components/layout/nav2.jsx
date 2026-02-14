@@ -19,14 +19,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CloseIcon from "@mui/icons-material/Close";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import useUser from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 import AvatarNab from "./avatarNab";
-import noAvatar from "../img/no-avatar.png";
+import noAvatar from "../../img/no-avatar.png";
 import NotificationsMenu from "./notifications";
 import { useLocation } from "react-router-dom";
 import Sidebar from "./sideBar";
-import sidebarConfig from "../config/sidebarConfig.json";
-import themeCustom from "../theme/theme";
+import sidebarConfig from "../../config/sidebarConfig.json";
+import themeCustom from "../../theme/theme";
 
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
