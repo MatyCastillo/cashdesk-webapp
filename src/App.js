@@ -3,13 +3,15 @@ import SignIn from "./components/auth/SignIn";
 import { UserContextProvider } from "./context/UserContext";
 import { SnackbarProvider } from 'notistack';
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
+  const Router = window.location.protocol === "file:" ? HashRouter : BrowserRouter;
+
   return (
     <SnackbarProvider maxSnack={3}>
     <UserContextProvider>
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/login" element={<SignIn />} />
           {/* <Route path="/inscripciones" element={<Home form="true" />} /> */}
@@ -17,7 +19,7 @@ function App() {
           <Route path="/by-date" element={<Home route="by-date"/>} />
           <Route path="/add-employee" element={<Home route="add-employee"/>} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </UserContextProvider>
     </SnackbarProvider >
   );

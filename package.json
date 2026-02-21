@@ -1,7 +1,11 @@
 {
   "name": "cashdesk-front",
   "version": "1.0.0",
+  "description": "Cashdesk desktop app",
+  "author": "MatiasCastillo",
   "private": true,
+  "homepage": "./",
+  "main": "electron/main.js",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",
@@ -15,10 +19,17 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/date-fns": "^2.6.0",
+    "archiver-utils": "^2.1.0",
     "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.28.0",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
     "html2canvas": "^1.4.1",
     "js-file-download": "^0.4.12",
+    "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.1",
     "moment-timezone": "^0.5.45",
     "notistack": "^3.0.1",
@@ -27,13 +38,41 @@
     "react-hook-form": "^7.32.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run start:web",
+    "start:web": "cross-env REACT_APP_API_URL=http://127.0.0.1:8080 react-scripts start",
+    "start:backend": "node backend/server.js",
+    "wait:web": "wait-on tcp:3000",
+    "start:electron": "node electron/start-electron.js",
+    "dev:electron": "concurrently -k -n WEB,DESKTOP -c blue,magenta \"npm run start:web\" \"npm run wait:web && npm run start:electron\"",
     "build": "react-scripts build",
+    "dist": "npm run build && electron-builder",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.cashdesk",
+    "productName": "Cashdesk",
+    "extraMetadata": {
+      "main": "electron/main.js"
+    },
+    "files": [
+      "build/**/*",
+      "electron/**/*",
+      "backend/**/*",
+      "package.json",
+      "!backend/node_modules/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "signAndEditExecutable": false,
+      "target": "nsis"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +93,11 @@
     ]
   },
   "devDependencies": {
-    "@mui/x-data-grid-generator": "^5.16.0"
+    "@mui/x-data-grid-generator": "^5.16.0",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "wait-on": "^8.0.2"
   }
 }

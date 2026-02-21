@@ -14,7 +14,7 @@ const createPayment = async (method, amount, date, branchId, user) => {
      const [results] = await pool.query(query, values);
      return results;
    } catch (err) {
-     logger.error(`Error creating payment: method=${method}, amount=${amount}, date=${date}, branchId=${branchId}, user=${user}- ${err.message}`);
+     logger(new Error(`Error creating payment: method=${method}, amount=${amount}, date=${date}, branchId=${branchId}, user=${user} - ${err.message}`));
      throw new Error('Error creating payment. Please try again later.');
    }
 };
@@ -36,7 +36,7 @@ const getPaymentsByDate = async (date, branch) => {
     const [rows] = await pool.query(query, [date, branch, hour]);
     return rows;
   } catch (err) {
-    logger.error(`Error fetching payments for date: ${date}, branch: ${branch} - ${err.message}`);
+    logger(new Error(`Error fetching payments for date: ${date}, branch: ${branch} - ${err.message}`));
     throw new Error('Error fetching payments. Please try again later.');
   }
 };
@@ -44,12 +44,12 @@ const getPaymentsByDate = async (date, branch) => {
 const getAllPaymentsByDate = async (date) => {
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM payments WHERE date = ? ",
+      "SELECT * FROM payments WHERE DATE(date) = ?",
       [date]
     );
     return rows;
   } catch (err) {
-    logger.error(`Error fetching payments for date: ${date} - ${err.message}`);
+    logger(new Error(`Error fetching payments for date: ${date} - ${err.message}`));
     throw new Error('Error fetching payments. Please try again later.');
   }
 };
@@ -62,7 +62,7 @@ const markPaymentAsDeleted = async (id) => {
     );
     return result;
   } catch (err) {
-    logger.error(`Error marking payment as deleted: id=${id} - ${err.message}`);
+    logger(new Error(`Error marking payment as deleted: id=${id} - ${err.message}`));
     throw new Error('Error marking payment as deleted. Please try again later.');
   }
 };
@@ -79,7 +79,7 @@ const getUniquePaymentDates = async () => {
     const [rows] = await pool.execute(query);
     return rows;
   } catch (err) {
-    logger.error(`Error fetching unique payment dates: ${err.message}`);
+    logger(new Error(`Error fetching unique payment dates: ${err.message}`));
     throw new Error('Error fetching unique payment dates. Please try again later.');
   }
 };

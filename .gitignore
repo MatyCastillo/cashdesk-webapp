@@ -6,12 +6,19 @@
 /backend/node_modules
 /.pnp
 .pnp.js
+/.tmp_asar
 
 # testing
 /coverage
 
 # production
 /build
+/dist
+/backend/data
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+dist*/
 
 # misc
 .DS_Store

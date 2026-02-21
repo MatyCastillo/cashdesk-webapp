@@ -1,11 +1,6 @@
-const express = require('express');
-const app = require('./app');
-const userRoutes = require('./routes/userRoutes');
+const { startServer } = require('./server');
 
-// Configurar las rutas
-app.use('/users', userRoutes);
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado en http://localhost:${PORT}`);
+startServer().catch((error) => {
+  console.error('No se pudo iniciar el servidor:', error);
+  process.exit(1);
 });

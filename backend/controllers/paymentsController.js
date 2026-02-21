@@ -1,5 +1,4 @@
 const paymentModel = require('../models/paymentModel');
-const excel = require('exceljs');
 
 const savePayment = async (req, res) => {
   const { method, amount, date, branchId,user } = req.body;
@@ -58,6 +57,7 @@ const getPaymentDates = async (req, res) => {
 const downloadPaymentsByDate = async (req, res) => {
   const { date } = req.params;
   try {
+    const excel = require('exceljs');
     const rows = await paymentModel.getAllPaymentsByDate(new Date(date).toISOString().split('T')[0]);
 
     const workbook = new excel.Workbook();
